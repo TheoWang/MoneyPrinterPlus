@@ -4,16 +4,16 @@
 #   If you have any questions, please feel free to contact the author or me.
 #                                                   Email: fengapi@gmail.com
 #
-FROM swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/python:3.12-slim
+FROM python:3.11-slim
 ENV DEBIAN_FRONTEND noninteractive
 #
-MAINTAINER zihan<fengapi@gmail.com>
+# MAINTAINER zihan<fengapi@gmail.com>
 # Include dist
 COPY dist/ /root/dist/
 #
 
 # Set Mirrors For China & Install Base
-Run sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources && \
+RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources && \
     cd /root/dist/ && \
     apt-get update -y && \
     apt-get install -y --no-install-recommends \
@@ -27,9 +27,9 @@ Run sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debi
             portaudio19-dev \
             libgtk-3-dev \
             git && \
-
+#
 # Set China pip Mirrors
-    pip3 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
+    # pip3 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
     pip3 install --break-system-packages --upgrade pip && \
 #
 # Get For MoneyPrinterPlus v4.7
